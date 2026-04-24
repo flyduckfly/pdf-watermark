@@ -1,6 +1,10 @@
-# PDF 水印工具
+# PDF水印
 
 一个快速给 pdf 文件加水印的工具
+
+## 在线使用
+
+[https://pdf-watermark.nextseek.net/](https://pdf-watermark.nextseek.net/)
 
 ## 本地运行
 
@@ -20,3 +24,8 @@ npm run start
 - 自定义水印大小，颜色，密度，旋转角度
 - 效果预览
 - 上下键切换页面
+
+## Acknowledgement
+
+Clash Verge Buty was based on or inspired by these projects and so on:
+- [zhengpq/pdf-watermark](https://github.com/zhengpq/pdf-watermark): 一个快速给 pdf 文件加水印的工具.
