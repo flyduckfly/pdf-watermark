@@ -62,7 +62,7 @@ const App: React.FC = () => {
   const [imageList, setImageList] = useState<ImageData[]>([])
   const [currentImage, setCurrentImage] = useState(0)
   const [currentPagesChunk, setCurrentPagesChunk] = useState(0)
-  const [waterMarkValue, setWaterMarkValue] = useState<Array<string>>([''])
+  const [waterMarkValue, setWaterMarkValue] = useState<Array<string>>(['Preview Mode'])
   const [watermarkSize, setWatermarkSize] = useState({ width: waterUnitWidth, height: waterUnitHeight })
   const [watermarkPreviewSize, setWatermarkPreviewSize] = useState(0)
   const [textColor, setTextColor] = useState('rgba(80, 80, 80, 0.2)')
