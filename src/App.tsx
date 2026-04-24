@@ -86,7 +86,8 @@ const App: React.FC = () => {
   const pageWidth = useRef(0)
   const devicePixelRatio = window.devicePixelRatio
   const scalePoint = 1600
-
+  const pdfPreviewScale = Math.max(devicePixelRatio, 2.5)
+  
   const reset = useCallback(() => {
     setWaterMarkValue([''])
     setWatermarkSize({
@@ -370,7 +371,7 @@ const handleFileDragOver: React.DragEventHandler<HTMLDivElement> = useCallback((
             if (pageItem === 0) {
               pageWidth.current = imageWidth
             }
-            const canvasScale = imageWidth < scalePoint ? devicePixelRatio : 1
+            const canvasScale = imageWidth < scalePoint ? pdfPreviewScale : Math.max(devicePixelRatio, 1.5)
             const viewportScale = page.getViewport({ scale: canvasScale })
             const canvas = document.createElement('canvas');
             canvas.className = `canvas_${pageItem}`
