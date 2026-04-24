@@ -2,10 +2,6 @@
 
 一个快速给 pdf 文件加水印的工具
 
-## 在线使用
-
-[https://flyduckfly.github.io/pdf-watermark/](https://flyduckfly.github.io/pdf-watermark/)
-
 ## 本地运行
 
 clone 本项目然后运行一下命令即可在本地体验
