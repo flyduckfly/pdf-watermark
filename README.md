@@ -23,5 +23,4 @@ npm run start
 
 ## Acknowledgement
 
-Clash Verge Buty was based on or inspired by these projects and so on:
 - [zhengpq/pdf-watermark](https://github.com/zhengpq/pdf-watermark): 一个快速给 pdf 文件加水印的工具.
