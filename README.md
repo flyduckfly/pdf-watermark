@@ -4,7 +4,7 @@
 
 ## 在线使用
 
-[https://pdf-watermark.nextseek.net/](https://pdf-watermark.nextseek.net/)
+[https://flyduckfly.github.io/pdf-watermark/](https://flyduckfly.github.io/pdf-watermark/)
 
 ## 本地运行
 
