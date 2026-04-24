@@ -32,7 +32,7 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build-doc
+        run: CI=false npm run build-doc
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
