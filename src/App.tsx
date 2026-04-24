@@ -177,28 +177,67 @@ const App: React.FC = () => {
     reset()
   }
 
-  const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return
-    setUploading(true)
-    setCurrentPagesChunk(0)
-    imagesListDataRef.current = []
-    selectedPagesDataRef.current = []
-    messageApi.info({
-      content: "文件解析中...",
-      duration: 0,
+const uploadPdfFile = useCallback((pdfFile: File) => {
+  const isPdf = pdfFile.type === 'application/pdf' || pdfFile.name.toLowerCase().endsWith('.pdf')
+
+  if (!isPdf) {
+    messageApi.warning({
+      content: '请上传 PDF 文件',
     })
-    setTimeout(() => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          setFile(event.target?.result)
-          setFileName(file.name)
-        }
-      };
-      reader.readAsArrayBuffer(file);
-    }, 300)
+    return
   }
+
+  setUploading(true)
+  setCurrentPagesChunk(0)
+  imagesListDataRef.current = []
+  selectedPagesDataRef.current = []
+  messageApi.info({
+    content: '文件解析中...',
+    duration: 0,
+  })
+
+  setTimeout(() => {
+    const reader = new FileReader()
+
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        setFile(event.target.result)
+        setFileName(pdfFile.name)
+      }
+    }
+
+    reader.readAsArrayBuffer(pdfFile)
+  }, 300)
+}, [messageApi])
+
+const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = async (event) => {
+  const pdfFile = event.target.files?.[0]
+
+  if (!pdfFile) return
+
+  uploadPdfFile(pdfFile)
+}
+
+const handleFileDrop: React.DragEventHandler<HTMLDivElement> = useCallback((event) => {
+  event.preventDefault()
+  event.stopPropagation()
+
+  const pdfFile = event.dataTransfer.files?.[0]
+
+  if (!pdfFile) return
+
+  uploadPdfFile(pdfFile)
+
+  if (uploadInputRef.current) {
+    uploadInputRef.current.value = ''
+  }
+}, [uploadPdfFile])
+
+const handleFileDragOver: React.DragEventHandler<HTMLDivElement> = useCallback((event) => {
+  event.preventDefault()
+  event.stopPropagation()
+}, [])
+  
   // 修改水印内容
   const handleChangeText = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget
@@ -483,7 +522,12 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-            <div ref={leftMainRef} className={classNames('left_main', { 'left_main_images': imageList.length > 0 })}>
+            <div
+              ref={leftMainRef}
+              className={classNames('left_main', { 'left_main_images': imageList.length > 0 })}
+              onDrop={handleFileDrop}
+              onDragOver={handleFileDragOver}
+            >
               {file && (
                 <TransformWrapper ref={transformComponentRef} centerOnInit centerZoomedOut minScale={0.2}>
                   {({ zoomIn, zoomOut }) => {
@@ -526,7 +570,9 @@ const App: React.FC = () => {
               {!file && (
                 <div className="empty">
                   <input ref={uploadInputRef} className="button_input" accept=".pdf" type="file" onChange={handleFileChange} />
-                  <Button icon={<UploadOutlined />} size="large" type="primary" onClick={handleUpload}>上传 PDF 文件</Button>
+                  <Button icon={<UploadOutlined />} size="large" type="primary" onClick={handleUpload}>
+                    点击或拖拽上传 PDF 文件
+                  </Button>
                 </div>
               )}
             </div>
