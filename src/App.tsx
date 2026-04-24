@@ -44,6 +44,7 @@ const waterMarkTypeOptions = [
 const waterUnitWidth = 200
 const waterUnitHeight = 160
 const waterUnitPadding = 20
+const defaultWaterMarkText = 'Preview Mode'
 
 const acceptImageType = ['png', 'jpeg', 'webp', 'svg+xml']
 const imageMaxSize = 1024 * 1024 / 2
@@ -62,7 +63,7 @@ const App: React.FC = () => {
   const [imageList, setImageList] = useState<ImageData[]>([])
   const [currentImage, setCurrentImage] = useState(0)
   const [currentPagesChunk, setCurrentPagesChunk] = useState(0)
-  const [waterMarkValue, setWaterMarkValue] = useState<Array<string>>(['Preview Mode'])
+  const [waterMarkValue, setWaterMarkValue] = useState<Array<string>>([defaultWaterMarkText])
   const [watermarkSize, setWatermarkSize] = useState({ width: waterUnitWidth, height: waterUnitHeight })
   const [watermarkPreviewSize, setWatermarkPreviewSize] = useState(0)
   const [textColor, setTextColor] = useState('rgba(80, 80, 80, 0.2)')
@@ -89,7 +90,7 @@ const App: React.FC = () => {
   const pdfPreviewScale = Math.max(devicePixelRatio, 2.5)
   
   const reset = useCallback(() => {
-    setWaterMarkValue([''])
+    setWaterMarkValue([defaultWaterMarkText])
     setWatermarkSize({
       width: waterUnitWidth,
       height: waterUnitHeight,
